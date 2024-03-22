@@ -47,16 +47,24 @@ LeafNode: {self.tag}, {self.value}, {self.props}
     """
 
 
-# test = HTMLNode("h1", "Amazing Test")
-# print(test)
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, None, children, props)
 
-# a_tag_test = HTMLNode("a", "click here", None, {"href": "https://www.google.com"})
 
-# print(a_tag_test.props_to_html())
+    def to_html(self):
+        if self.tag is None:
+            raise ValueError("No tag")
+        if self.children is None:
+            raise ValueError("No children")
+        
+        children_as_string = ""
+        child_html = [node.to_html() for node in self.children]
+        for thing in child_html:
+            children_as_string += thing
 
-# test_leaf = LeafNode("p", "This is a paragraph of text.")
-# print(test_leaf.to_html())
+        return f"""<{self.tag}{self.props_to_html()}>{children_as_string}</{self.tag}>"""
 
-# test_with_attrs = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
-# print(test_leaf.to_html())
-# print(test_with_attrs.to_html())
+
+    def __repr__(self):
+        return f"ParentNode: {self.tag} | children: {self.children} | props: {self.props}"
