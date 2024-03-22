@@ -13,7 +13,7 @@ class TestTextNode(unittest.TestCase):
         node2 = TextNode("This is a different text node", 'bold')
         self.assertNotEqual(node, node2)
 
-    def test_none_and_default_none_equal(self):
+    def test_none_and_default_none_are_equal(self):
         node = TextNode("This is a text node", 'bold', url=None)
         node2 = TextNode("This is a text node", 'bold')
         self.assertEqual(node, node2)
